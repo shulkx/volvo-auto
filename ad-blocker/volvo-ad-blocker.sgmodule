@@ -1,0 +1,15 @@
+#!name=Volvo Ad Blocker
+#!desc=Block Volvo app advertisements and surveys
+#!author=marcushu
+#!category=marcushu
+
+[Body Rewrite]
+# Block Volvo open ads
+http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/settings\/api\/v1\/openad\/selectUping$ 'if (has("data")) then (.data = {}) else . end'
+# Block Volvo mall rotation banners
+http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/mall\/api\/v1\/rotation$ 'if (has("data") and (.data | has("rotations"))) then (.data.rotations = []) else . end'
+# Block Volvo score templates
+http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/base\/getScoreTemplates\?channel=base$ 'if (has("data")) then (.data = {}) else . end'
+
+[MITM]
+hostname = %APPEND% apigateway.digitalvolvo.com
