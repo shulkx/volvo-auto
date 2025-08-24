@@ -10,6 +10,8 @@ http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/settings\/api\/v
 http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/mall\/api\/v1\/rotation$ 'if (has("data") and (.data | has("rotations"))) then (.data.rotations = []) else . end'
 # Block Volvo score templates
 http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/base\/getScoreTemplates\?channel=.*$ 'if (has("data")) then (.data = {}) else . end'
+# Block Volvo maintenance service score templates
+http-response-jq ^https:\/\/apigateway\.digitalvolvo\.com\/app\/maintenance\/api\/serviceTab\/v1\/queryScoreTemplates$ 'if (has("data")) then (.data = {}) else . end'
 
 [MITM]
 hostname = %APPEND% apigateway.digitalvolvo.com
